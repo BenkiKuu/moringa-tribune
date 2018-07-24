@@ -1,9 +1,9 @@
-from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .models import Article, NewsLetterRecipients
+from . models import Article, NewsLetterRecipients
 from django.shortcuts import render, redirect
-from .email import send_welcome_email
-from .forms import NewsLetterForm, NewArticleForm
+from . email import send_welcome_email
+from . forms import NewsLetterForm, NewArticleForm
 import datetime as dt
 
 
@@ -113,7 +113,7 @@ def article(request,article_id):
     return render(request,"all-news/article.html", {"article":article})
 
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login/')
 def new_article(request):
     current_user = request.user
     if request.method == 'POST':
@@ -123,6 +123,6 @@ def new_article(request):
             article.editor = current_user
             article.save()
 
-        else:
-            form = NewArticleForm()
-        return render(request, 'new_article.html', {"form": form})
+    else:
+        form = NewArticleForm()
+    return render(request, 'new_article.html', {"form":form})
